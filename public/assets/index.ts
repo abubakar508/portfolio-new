@@ -37,9 +37,11 @@ import Cairo from "./cairo.png";
 import Linea from "./linea.png";
 import Linera from "./linera.png";
 import Aptos from "./aptos.png";
+import Menu from "./menu.png";
 
 
 export {
+  Menu,
   Aptos,
   Ethereum,
   Move,

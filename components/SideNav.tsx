@@ -1,45 +1,90 @@
-"use client";
-import { MotionWrapper } from "@/wrapper/MotionWrapper";
-import React, { useState } from "react";
+'use client';
 
-// link from react-scroll
-import Link from "next/link";
+import React from 'react';
+import { Link } from "react-scroll";
+import { motion, AnimatePresence } from 'framer-motion';
 
-const SideNav = ({ NavData }: any) => {
-  const [hoveredLinkId, setHoveredLinkId] = useState<string | null>(null);
+interface NavItem {
+  name: string;
+  id: string;
+}
 
-  const handleMouseEnter = (id: string) => {
-    setHoveredLinkId(id);
-  };
+interface SideNavProps {
+  NavData: NavItem[];
+  isOpen?: boolean;
+  onClose?: () => void;
+}
 
-  const handleMouseLeave = () => {
-    setHoveredLinkId(null);
-  };
-
+const SideNav: React.FC<SideNavProps> = ({ NavData, isOpen = false, onClose }) => {
   return (
-    <div className="absolute h-screen right-10 p-2 flex items-center justify-center z-50">
-      <div className="py-5 flex items-center flex-col justify-between p-2 h-[40%]">
-        {NavData.map((item: any, index: number) => (
-          <div className="relative" key={index}>
-            <Link
-              onMouseEnter={() => handleMouseEnter(item.id)}
-              onMouseLeave={handleMouseLeave}
-              href={item.id}
-              className=""
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+          />
+
+          {/* Side Navigation Panel */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed top-0 right-0 h-screen w-full md:w-[400px] bg-black border-l border-[#FFD700]/20 z-50"
+          >
+            {/* Close Button */}
+            <button
+              onClick={onClose}
+              className="absolute top-6 right-6 text-[#FFD700] hover:text-white"
             >
-              <div className="bg-slate-950 p-4 rounded-full" />
-            </Link>
-            {hoveredLinkId === item.id && (
-                <MotionWrapper>
-              <div className="absolute bg-[#123524] text-neutral-200 p-4 -left-28 items-end top-0 rounded-md">
-                {item.name}
-              </div>
-              </MotionWrapper>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
+            {/* Navigation Content */}
+            <div className="h-full flex flex-col justify-center items-center p-8">
+              <motion.div className="flex flex-col gap-8 items-center">
+                {NavData.map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="w-full"
+                  >
+                    <Link
+                      to={item.id}
+                      smooth={true}
+                      duration={500}
+                      onClick={onClose}
+                      className="text-2xl text-gray-300 hover:text-[#FFD700] cursor-pointer transition-all duration-300 block py-3 px-6 rounded-lg hover:bg-[#FFD700]/10 text-center"
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 };
 

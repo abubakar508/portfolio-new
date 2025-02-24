@@ -177,7 +177,7 @@ const Contact = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4, duration: 0.6 }}
                     >
-                        Have a project in mind or want to discuss a collaboration? I'd love to hear from you!
+                        Have a project in mind or want to discuss a collaboration? I&apos;d love to hear from you!
                     </motion.p>
                 </motion.div>
 

@@ -37,6 +37,7 @@ import Cairo from "./cairo.png";
 import Linea from "./linea.png";
 import Linera from "./linera.png";
 import Aptos from "./aptos.png";
+import Abisma from "./abisma_real.jpg";
 
 
 export {
@@ -79,4 +80,5 @@ export {
   Web3,
   StreamLit,
   User,
+  Abisma
 };

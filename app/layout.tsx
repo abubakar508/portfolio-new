@@ -6,8 +6,8 @@ import { Nav } from "@/components";
 const inter = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ABISMAHAT | Home",
-  description: "Abismahat, a blockchain developer",
+  title: "Abubakar Ismail | Home",
+  description: "Abubakar Ismail, a Blockchain Developer, Backend Developer and Finance lover",
 };
 
 export default function RootLayout({

@@ -111,7 +111,7 @@ const Skills = () => {
   return (
     <div
       ref={sectionRef}
-      className="min-h-screen bg-black text-white py-20 relative overflow-hidden"
+      className="min-h-screen bg-black text-white py-16 sm:py-20 md:py-24 relative overflow-hidden"
     >
       {/* Background Elements */}
       <motion.div
@@ -135,20 +135,18 @@ const Skills = () => {
         </div>
       </motion.div>
 
-
-
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/50 to-black pointer-events-none" />
 
       <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+        className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10"
         style={{ opacity: opacitySection }}
       >
-        {/* Header */}
+        {/* Header - Improved spacing */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
           variants={itemVariants}
           style={{ y: headerY }}
         >
@@ -156,21 +154,21 @@ const Skills = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="inline-block mb-3"
+            className="inline-block mb-4 sm:mb-5"
           >
-            <span className="text-sm font-medium bg-[#FFD700]/10 text-[#FFD700] px-4 py-1.5 rounded-full">
+            <span className="text-xs sm:text-sm font-medium bg-[#FFD700]/10 text-[#FFD700] px-3 sm:px-4 py-1.5 rounded-full">
               Technical Stack
             </span>
           </motion.div>
 
-          <h2 className="text-4xl md:text-6xl font-black mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FFD700] to-white">
               Technical Expertise
             </span>
           </h2>
 
           <motion.p
-            className="text-gray-400 text-lg max-w-2xl mx-auto"
+            className="text-gray-400 text-base sm:text-lg max-w-xl sm:max-w-2xl mx-auto px-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -180,30 +178,30 @@ const Skills = () => {
           </motion.p>
         </motion.div>
 
-        {/* Category Navigation */}
+        {/* Category Navigation - Improved for mobile */}
         <motion.div
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-10 sm:mb-12 px-1"
           variants={itemVariants}
         >
           {skills.map((skillSet) => (
             <motion.button
               key={skillSet.category}
               onClick={() => setActiveCategory(skillSet.category)}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center space-x-2 ${activeCategory === skillSet.category
+              className={`px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center space-x-1 sm:space-x-2 ${activeCategory === skillSet.category
                 ? "bg-[#FFD700] text-black shadow-lg shadow-[#FFD700]/20"
                 : "bg-black/40 backdrop-blur-md border border-[#FFD700]/20 text-white hover:border-[#FFD700]/50"
                 }`}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span className="text-lg">{skillSet.icon}</span>
+              <span className="text-base sm:text-lg">{skillSet.icon}</span>
               <span>{skillSet.category}</span>
             </motion.button>
           ))}
         </motion.div>
 
-        {/* Active Skill Category Display */}
-        <div className="my-12 relative min-h-[500px]">
+        {/* Active Skill Category Display - Optimized for mobile */}
+        <div className="my-8 sm:my-10 md:my-12 relative min-h-[450px] sm:min-h-[500px]">
           <AnimatePresence mode="wait">
             {skills.filter(skill => skill.category === activeCategory).map((skillSet) => (
               <motion.div
@@ -214,23 +212,23 @@ const Skills = () => {
                 variants={slideVariants}
                 className="w-full"
               >
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  {/* Left: Category Info */}
+                <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+                  {/* Left: Category Info - Mobile optimized */}
                   <motion.div
-                    className="md:w-1/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-2xl p-8 hover:border-[#FFD700]/40 transition-all duration-300"
+                    className="w-full md:w-1/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 hover:border-[#FFD700]/40 transition-all duration-300"
                     initial={{ x: -30, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.6 }}
                   >
-                    <div className="w-16 h-16 rounded-full bg-[#FFD700]/10 flex items-center justify-center text-4xl mb-6">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#FFD700]/10 flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6">
                       {skillSet.icon}
                     </div>
 
-                    <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FFD700] to-white mb-4">
+                    <h3 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FFD700] to-white mb-3 sm:mb-4">
                       {skillSet.category}
                     </h3>
 
-                    <p className="text-gray-400 mb-6">
+                    <p className="text-gray-400 text-sm sm:text-base mb-5 sm:mb-6">
                       {skillSet.description}
                     </p>
 
@@ -239,7 +237,7 @@ const Skills = () => {
                         <motion.div
                           key={skill.name}
                           className="h-1.5 flex-1 rounded-full overflow-hidden bg-white/10"
-                          whileHover={{ height: "10px", transition: { duration: 0.2 } }}
+                          whileHover={{ height: "8px", transition: { duration: 0.2 } }}
                         >
                           <motion.div
                             className="h-full rounded-full"
@@ -257,9 +255,9 @@ const Skills = () => {
                     </div>
                   </motion.div>
 
-                  {/* Right: Skills Detail */}
-                  <motion.div className="md:w-2/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-2xl p-8">
-                    <div className="space-y-6">
+                  {/* Right: Skills Detail - Mobile optimized */}
+                  <motion.div className="w-full md:w-2/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8">
+                    <div className="space-y-5 sm:space-y-6">
                       {skillSet.items.map((skill, index) => (
                         <motion.div
                           key={skill.name}
@@ -268,21 +266,21 @@ const Skills = () => {
                           transition={{ delay: 0.1 * index + 0.3, duration: 0.5 }}
                           className="relative"
                         >
-                          <div className="flex justify-between items-center mb-3">
+                          <div className="flex justify-between items-center mb-2 sm:mb-3">
                             <div className="flex items-center">
                               <motion.div
-                                className="w-3 h-3 rounded-full mr-3"
+                                className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full mr-2 sm:mr-3"
                                 style={{ backgroundColor: skill.color }}
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
                                 transition={{ delay: 0.1 * index + 0.5, duration: 0.4 }}
                               />
-                              <span className="text-white font-medium">{skill.name}</span>
+                              <span className="text-white text-sm sm:text-base font-medium">{skill.name}</span>
                             </div>
                             <div className="flex items-center space-x-2">
-                              <div className="text-xs text-gray-400">Proficiency</div>
+                              <div className="text-2xs sm:text-xs text-gray-400">Proficiency</div>
                               <motion.span
-                                className="text-[#FFD700] font-bold"
+                                className="text-[#FFD700] text-sm sm:text-base font-bold"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: calculateDelay(skill.level), duration: 0.3 }}
@@ -292,7 +290,7 @@ const Skills = () => {
                             </div>
                           </div>
 
-                          <div className="h-2.5 bg-gray-800 rounded-full overflow-hidden flex">
+                          <div className="h-2 sm:h-2.5 bg-gray-800 rounded-full overflow-hidden flex">
                             <motion.div
                               initial={{ width: 0 }}
                               animate={{ width: `${skill.level}%` }}
@@ -322,8 +320,8 @@ const Skills = () => {
                             </motion.div>
                           </div>
 
-                          {/* Experience Bar */}
-                          <div className="flex justify-between text-xs mt-1.5 text-gray-500">
+                          {/* Experience Bar - More mobile friendly */}
+                          <div className="flex justify-between text-2xs sm:text-xs mt-1 sm:mt-1.5 text-gray-500">
                             <span>Beginner</span>
                             <span>Intermediate</span>
                             <span>Expert</span>
@@ -332,28 +330,26 @@ const Skills = () => {
                       ))}
                     </div>
 
-
-
-                    {/* Additional Info */}
+                    {/* Additional Info - Improved for mobile */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.8, duration: 0.5 }}
-                      className="mt-8 pt-6 border-t border-gray-800"
+                      className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-gray-800"
                     >
-                      <h4 className="text-lg font-medium text-[#FFD700] mb-3">Projects Showcase</h4>
-                      <div className="flex space-x-2 overflow-x-auto pb-2">
+                      <h4 className="text-base sm:text-lg font-medium text-[#FFD700] mb-3">Projects Showcase</h4>
+                      <div className="flex space-x-3 overflow-x-auto pb-2 px-1">
                         {[...Array(3)].map((_, i) => (
                           <motion.div
                             key={i}
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.9 + i * 0.1, duration: 0.4 }}
-                            className="flex-shrink-0 w-16 h-16 rounded-lg bg-gradient-to-br from-[#FFD700]/20 to-black overflow-hidden relative"
+                            className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-gradient-to-br from-[#FFD700]/20 to-black overflow-hidden relative"
                             whileHover={{ scale: 1.05 }}
                           >
                             <div className="absolute inset-0 flex items-center justify-center">
-                              <span className="text-2xl">{skillSet.icon}</span>
+                              <span className="text-xl sm:text-2xl">{skillSet.icon}</span>
                             </div>
                           </motion.div>
                         ))}
@@ -366,10 +362,10 @@ const Skills = () => {
           </AnimatePresence>
         </div>
 
-        {/* Bottom Stats */}
+        {/* Bottom Stats - Mobile grid optimized */}
         <motion.div
           variants={containerVariants}
-          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
+          className="mt-16 sm:mt-20 md:mt-24 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center"
         >
           {[
             { label: "Years Experience", value: "3+", icon: "⏱️" },
@@ -388,20 +384,20 @@ const Skills = () => {
                 whileHover={{ rotate: 0 }}
               />
               <motion.div
-                className="h-full relative bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl p-6 transition-all duration-300 group-hover:border-[#FFD700]/40 group-hover:translate-y-[-5px]"
+                className="h-full relative bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl p-4 sm:p-5 md:p-6 transition-all duration-300 group-hover:border-[#FFD700]/40 group-hover:translate-y-[-5px]"
                 whileHover={{
                   boxShadow: "0 10px 25px -5px rgba(255, 215, 0, 0.05)"
                 }}
               >
                 <motion.div
-                  className="text-2xl mb-4 mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-[#FFD700]/10"
+                  className="text-xl sm:text-2xl mb-3 sm:mb-4 mx-auto flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FFD700]/10"
                   initial={{ scale: 0, rotate: -20 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: index * 0.1 + 0.5, duration: 0.5, type: "spring" }}
                 >
                   {stat.icon}
                 </motion.div>
-                <h4 className="text-3xl md:text-4xl font-bold text-[#FFD700] mb-2">
+                <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#FFD700] mb-1 sm:mb-2">
                   <motion.span
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -410,10 +406,10 @@ const Skills = () => {
                     {stat.value}
                   </motion.span>
                 </h4>
-                <p className="text-gray-400 text-sm md:text-base">{stat.label}</p>
+                <p className="text-xs sm:text-sm md:text-base text-gray-400">{stat.label}</p>
 
                 <motion.div
-                  className="w-12 h-0.5 bg-gradient-to-r from-[#FFD700]/5 to-[#FFD700]/80 mx-auto mt-4"
+                  className="w-10 sm:w-12 h-0.5 bg-gradient-to-r from-[#FFD700]/5 to-[#FFD700]/80 mx-auto mt-3 sm:mt-4"
                   initial={{ width: 0 }}
                   animate={{ width: 48 }}
                   transition={{ delay: index * 0.1 + 0.9, duration: 0.5 }}
@@ -423,17 +419,17 @@ const Skills = () => {
           ))}
         </motion.div>
 
-        {/* Call to Action */}
+        {/* Call to Action - Improved spacing */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.7 }}
-          className="mt-20 text-center"
+          className="mt-16 sm:mt-20 text-center py-4"
         >
           <motion.button
             whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255, 215, 0, 0.3)" }}
             whileTap={{ scale: 0.98 }}
-            className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-black font-bold px-8 py-4 rounded-full"
+            className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-black text-sm sm:text-base font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full"
           >
             View My Portfolio
           </motion.button>

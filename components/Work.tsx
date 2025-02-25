@@ -7,7 +7,7 @@ import { Abismahat } from '@/public/assets';
 
 const WorkExperience = () => {
     const sectionRef = useRef(null);
-    const [activeCompany, setActiveCompany] = useState('Blockchain Labs');
+    const [activeCompany, setActiveCompany] = useState('ImmersiCloud Consulting');
 
     // Scroll-based animations
     const { scrollYProgress } = useScroll({
@@ -27,11 +27,10 @@ const WorkExperience = () => {
             period: "Jan 2022 - Present",
             location: "Remote, Global",
             highlights: [
-                "Lead development of decentralized financial (DeFi) platforms, and blockchian integrations to client applications",
-                "Ensure prior and top notch communication and operatons channel between developers.",
-                "Lead blokcchian talks and refreshers for the new developers in teh company",
+                "Lead development of decentralized financial (DeFi) platforms, and blockchain integrations to client applications",
+                "Ensure prior and top notch communication and operations channel between developers.",
+                "Lead blockchain talks and refreshers for the new developers in the company",
                 "Architect smart contract solutions using Solidity, ensuring high security and gas efficiency",
-
             ],
             technologies: ["Solidity", "Web3.js", "Truffle", "Polygon", "Ethereum"]
         },
@@ -42,7 +41,7 @@ const WorkExperience = () => {
             location: "Kenya",
             highlights: [
                 "Developed scalable microservices architecture for financial analytics platform",
-                "Created real-time trading dashboard with finacial analysis",
+                "Created real-time trading dashboard with financial analysis",
                 "Optimized backend performance, reducing API response times by 65%",
             ],
             technologies: ["TypeScript", "React", "NestJS", "GraphQL", "Docker", "Go"]
@@ -105,7 +104,7 @@ const WorkExperience = () => {
     return (
         <div
             ref={sectionRef}
-            className="min-h-screen bg-black text-white py-20 relative overflow-hidden"
+            className="min-h-screen bg-black text-white py-16 sm:py-20 relative overflow-hidden"
         >
             {/* Background Elements */}
             <motion.div
@@ -135,12 +134,12 @@ const WorkExperience = () => {
                 initial="hidden"
                 animate="visible"
                 variants={containerVariants}
-                className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+                className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10"
                 style={{ opacity: opacitySection }}
             >
-                {/* Header */}
+                {/* Header - Improved for mobile */}
                 <motion.div
-                    className="text-center mb-16"
+                    className="text-center mb-12 sm:mb-16"
                     variants={itemVariants}
                     style={{ y: headerY }}
                 >
@@ -148,21 +147,21 @@ const WorkExperience = () => {
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.8 }}
-                        className="inline-block mb-3"
+                        className="inline-block mb-4"
                     >
-                        <span className="text-sm font-medium bg-[#FFD700]/10 text-[#FFD700] px-4 py-1.5 rounded-full">
+                        <span className="text-xs sm:text-sm font-medium bg-[#FFD700]/10 text-[#FFD700] px-3 sm:px-4 py-1.5 rounded-full">
                             Professional Journey
                         </span>
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-6xl font-black mb-4">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6">
                         <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FFD700] to-white">
                             Work Experience
                         </span>
                     </h2>
 
                     <motion.p
-                        className="text-gray-400 text-lg max-w-2xl mx-auto"
+                        className="text-gray-400 text-base sm:text-lg max-w-xl sm:max-w-2xl mx-auto px-2"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4, duration: 0.6 }}
@@ -171,16 +170,16 @@ const WorkExperience = () => {
                     </motion.p>
                 </motion.div>
 
-                {/* Company Navigation */}
+                {/* Company Navigation - Made more mobile friendly */}
                 <motion.div
-                    className="flex flex-wrap justify-center gap-4 mb-12"
+                    className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-8 sm:mb-12 px-1"
                     variants={itemVariants}
                 >
                     {workExperience.map((exp) => (
                         <motion.button
                             key={exp.company}
                             onClick={() => setActiveCompany(exp.company)}
-                            className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 flex items-center space-x-2 ${activeCompany === exp.company
+                            className={`px-3 sm:px-4 md:px-6 py-2 md:py-3 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center space-x-1 sm:space-x-2 ${activeCompany === exp.company
                                 ? "bg-[#FFD700] text-black shadow-lg shadow-[#FFD700]/20"
                                 : "bg-black/40 backdrop-blur-md border border-[#FFD700]/20 text-white hover:border-[#FFD700]/50"
                                 }`}
@@ -192,8 +191,8 @@ const WorkExperience = () => {
                     ))}
                 </motion.div>
 
-                {/* Active Experience Display */}
-                <div className="my-12 relative min-h-[500px]">
+                {/* Active Experience Display - Optimized for mobile */}
+                <div className="my-8 sm:my-10 md:my-12 relative min-h-[450px] sm:min-h-[500px]">
                     <AnimatePresence mode="wait">
                         {workExperience.filter(exp => exp.company === activeCompany).map((exp) => (
                             <motion.div
@@ -204,43 +203,43 @@ const WorkExperience = () => {
                                 variants={slideVariants}
                                 className="w-full"
                             >
-                                <div className="flex flex-col md:flex-row gap-8 items-start">
-                                    {/* Left: Company Info */}
+                                <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
+                                    {/* Left: Company Info - Mobile optimized */}
                                     <motion.div
-                                        className="md:w-1/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-2xl p-8 hover:border-[#FFD700]/40 transition-all duration-300"
+                                        className="w-full md:w-1/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 hover:border-[#FFD700]/40 transition-all duration-300"
                                         initial={{ x: -30, opacity: 0 }}
                                         animate={{ x: 0, opacity: 1 }}
                                         transition={{ delay: 0.2, duration: 0.6 }}
                                     >
-                                        <div className="w-16 h-16 rounded-full bg-[#FFD700]/10 flex items-center justify-center text-4xl mb-6">
+                                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#FFD700]/10 flex items-center justify-center text-3xl sm:text-4xl mb-5 sm:mb-6">
                                             🏢
                                         </div>
 
-                                        <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FFD700] to-white mb-4">
+                                        <h3 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FFD700] to-white mb-3 sm:mb-4">
                                             {exp.company}
                                         </h3>
 
-                                        <p className="text-gray-400 mb-4">
+                                        <p className="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">
                                             <strong className="text-white">{exp.title}</strong>
                                             <br />
                                             {exp.period}
                                         </p>
 
-                                        <p className="text-gray-300">
+                                        <p className="text-gray-300 text-sm sm:text-base">
                                             {exp.location}
                                         </p>
                                     </motion.div>
 
-                                    {/* Right: Experience Details */}
+                                    {/* Right: Experience Details - Mobile optimized */}
                                     <motion.div
-                                        className="md:w-2/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-2xl p-8"
+                                        className="w-full md:w-2/3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8"
                                         initial={{ x: 30, opacity: 0 }}
                                         animate={{ x: 0, opacity: 1 }}
                                         transition={{ delay: 0.3, duration: 0.6 }}
                                     >
-                                        <h4 className="text-2xl font-bold text-[#FFD700] mb-6">Key Achievements</h4>
+                                        <h4 className="text-xl sm:text-2xl font-bold text-[#FFD700] mb-4 sm:mb-6">Key Achievements</h4>
 
-                                        <ul className="space-y-4 mb-8">
+                                        <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                                             {exp.highlights.map((highlight, index) => (
                                                 <motion.li
                                                     key={index}
@@ -249,14 +248,14 @@ const WorkExperience = () => {
                                                     transition={{ delay: 0.1 * index + 0.4, duration: 0.5 }}
                                                     className="flex items-start"
                                                 >
-                                                    <span className="text-[#FFD700] mr-3 text-xl">•</span>
-                                                    <span className="text-gray-300">{highlight}</span>
+                                                    <span className="text-[#FFD700] mr-2 sm:mr-3 text-lg sm:text-xl mt-0.5 sm:mt-0">•</span>
+                                                    <span className="text-gray-300 text-sm sm:text-base">{highlight}</span>
                                                 </motion.li>
                                             ))}
                                         </ul>
 
                                         <div>
-                                            <h4 className="text-xl font-semibold text-[#FFD700] mb-4">Technologies</h4>
+                                            <h4 className="text-lg sm:text-xl font-semibold text-[#FFD700] mb-3 sm:mb-4">Technologies</h4>
                                             <div className="flex flex-wrap gap-2">
                                                 {exp.technologies.map((tech, index) => (
                                                     <motion.span
@@ -264,7 +263,7 @@ const WorkExperience = () => {
                                                         initial={{ opacity: 0, scale: 0.8 }}
                                                         animate={{ opacity: 1, scale: 1 }}
                                                         transition={{ delay: 0.1 * index + 0.6, duration: 0.4 }}
-                                                        className="px-3 py-1 bg-[#FFD700]/10 text-[#FFD700] rounded-full text-sm"
+                                                        className="px-2 sm:px-3 py-1 bg-[#FFD700]/10 text-[#FFD700] rounded-full text-xs sm:text-sm"
                                                     >
                                                         {tech}
                                                     </motion.span>
@@ -278,10 +277,10 @@ const WorkExperience = () => {
                     </AnimatePresence>
                 </div>
 
-                {/* Career Stats */}
+                {/* Career Stats - Mobile grid optimized */}
                 <motion.div
                     variants={containerVariants}
-                    className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-6 text-center"
+                    className="mt-16 sm:mt-20 md:mt-24 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center"
                 >
                     {[
                         { label: "Companies", value: "3+", icon: "🏢" },
@@ -300,20 +299,20 @@ const WorkExperience = () => {
                                 whileHover={{ rotate: 0 }}
                             />
                             <motion.div
-                                className="h-full relative bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl p-6 transition-all duration-300 group-hover:border-[#FFD700]/40 group-hover:translate-y-[-5px]"
+                                className="h-full relative bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl p-4 sm:p-5 md:p-6 transition-all duration-300 group-hover:border-[#FFD700]/40 group-hover:translate-y-[-5px]"
                                 whileHover={{
                                     boxShadow: "0 10px 25px -5px rgba(255, 215, 0, 0.05)"
                                 }}
                             >
                                 <motion.div
-                                    className="text-2xl mb-4 mx-auto flex items-center justify-center w-12 h-12 rounded-full bg-[#FFD700]/10"
+                                    className="text-xl sm:text-2xl mb-3 sm:mb-4 mx-auto flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#FFD700]/10"
                                     initial={{ scale: 0, rotate: -20 }}
                                     animate={{ scale: 1, rotate: 0 }}
                                     transition={{ delay: index * 0.1 + 0.5, duration: 0.5, type: "spring" }}
                                 >
                                     {stat.icon}
                                 </motion.div>
-                                <h4 className="text-3xl md:text-4xl font-bold text-[#FFD700] mb-2">
+                                <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#FFD700] mb-1 sm:mb-2">
                                     <motion.span
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
@@ -322,10 +321,10 @@ const WorkExperience = () => {
                                         {stat.value}
                                     </motion.span>
                                 </h4>
-                                <p className="text-gray-400 text-sm md:text-base">{stat.label}</p>
+                                <p className="text-xs sm:text-sm md:text-base text-gray-400">{stat.label}</p>
 
                                 <motion.div
-                                    className="w-12 h-0.5 bg-gradient-to-r from-[#FFD700]/5 to-[#FFD700]/80 mx-auto mt-4"
+                                    className="w-10 sm:w-12 h-0.5 bg-gradient-to-r from-[#FFD700]/5 to-[#FFD700]/80 mx-auto mt-3 sm:mt-4"
                                     initial={{ width: 0 }}
                                     animate={{ width: 48 }}
                                     transition={{ delay: index * 0.1 + 0.9, duration: 0.5 }}
@@ -335,9 +334,9 @@ const WorkExperience = () => {
                     ))}
                 </motion.div>
 
-                {/* Background Image */}
+                {/* Background Image - More subtle on mobile */}
                 <motion.div
-                    className="absolute bottom-0 right-0 w-1/2 h-1/2 opacity-20 pointer-events-none"
+                    className="absolute bottom-0 right-0 w-2/3 md:w-1/2 h-1/3 md:h-1/2 opacity-10 sm:opacity-20 pointer-events-none"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 0.2, scale: 1 }}
                     transition={{ duration: 1, delay: 0.5 }}
@@ -356,18 +355,18 @@ const WorkExperience = () => {
                     </div>
                 </motion.div>
 
-                {/* Call to Action */}
+                {/* Call to Action - Better spacing for mobile */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.2, duration: 0.7 }}
-                    className="mt-20 text-center"
+                    className="mt-16 sm:mt-20 text-center pb-4 sm:pb-0"
                 >
                     <motion.a
                         href="#contact"
                         whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255, 215, 0, 0.3)" }}
                         whileTap={{ scale: 0.98 }}
-                        className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-black font-bold px-8 py-4 rounded-full"
+                        className="bg-gradient-to-r from-[#FFD700] to-[#B8860B] text-black text-sm sm:text-base font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full inline-block"
                     >
                         Download Resume
                     </motion.a>

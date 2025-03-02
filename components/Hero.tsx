@@ -70,7 +70,7 @@ const Hero = () => {
   const skills = [
     { name: "Developer", value: "developer", description: "Building robust backend systems and blockchain solutions" },
     { name: "Financial Analyst", value: "analyst", description: "Analyzing market trends and investment opportunities on stock market and crypto market" },
-    { name: "Blockchain Specialist", value: "blockchain", description: "Creating secure and decentralized applications" }
+    { name: "Blockchain Developer", value: "blockchain", description: "Creating secure and decentralized applications" }
   ];
 
   return (

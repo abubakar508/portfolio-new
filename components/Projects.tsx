@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Abisma, Abismahat, GitHub } from '@/public/assets';
 
 const Projects = () => {
     const sectionRef = useRef(null);
+    const sliderRef = useRef<any>(null);
     const [activeProject, setActiveProject] = useState(0);
+    const [sliderWidth, setSliderWidth] = useState<any>(0);
+    const [isMobile, setIsMobile] = useState(false);
 
     // Scroll-based animations
     const { scrollYProgress } = useScroll({
@@ -30,15 +33,15 @@ const Projects = () => {
             image: Abisma
         },
         {
-            title: "DID affinidi ecemmerce webiste",
-            description: "A decentralized ecommerce website powered by affinidi DID with Verifieable Credentials & Verifieable Presentations.",
+            title: "DID Affinidi Ecommerce Website",
+            description: "A decentralized ecommerce website powered by affinidi DID with Verifiable Credentials & Verifiable Presentations.",
             technologies: ["JavaScript", "Solidity"],
             githubLink: "https://github.com/abubakar508/DID-affinidi-ecemmerce-webiste.git",
             liveLink: "https://github.com/abubakar508/DID-affinidi-ecemmerce-webiste.git",
             image: Abisma
         },
         {
-            title: "Image compressor utility npm package",
+            title: "Image Compressor Utility NPM Package",
             description: "Image Compress Utility: A Node.js wrapper for client-side image compression, enhancing website performance by reducing image size before uploading.",
             technologies: ["C#", "TypeScript", "Rust", "Docker"],
             githubLink: "https://github.com/abubakar508/image-compressor-utility",
@@ -46,7 +49,7 @@ const Projects = () => {
             image: Abisma
         },
         {
-            title: "Zetachain -  Omnichain NFT Smart Contract",
+            title: "Zetachain - Omnichain NFT Smart Contract",
             description: "This innovative approach allows users to 'deposit' native EVM tokens into these NFTs and transfer them to different addresses. Recipients of these NFTs are presented with the option to either burn the NFTs to claim the 'deposited' tokens or further send them to other addresses.",
             technologies: ["Solidity", "TypeScript", "Docker"],
             githubLink: "https://github.com/abubakar508/Omnichain-NFT-smart-contract-on-ZetaChain.git",
@@ -54,7 +57,7 @@ const Projects = () => {
             image: Abisma
         },
         {
-            title: "Zetachain -  Crosschain messaging",
+            title: "Zetachain - Crosschain Messaging",
             description: "Cross-Chain Messaging protocol with ZetaChain enables seamless communication between different blockchain networks, facilitating secure and efficient data exchange across diverse blockchain environments.",
             technologies: ["Solidity", "TypeScript", "Docker"],
             githubLink: "https://github.com/abubakar508/Omnichain-NFT-smart-contract-on-ZetaChain.git",
@@ -79,6 +82,32 @@ const Projects = () => {
         }
     ];
 
+    // Check if on mobile device
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+
+            if (sliderRef.current) {
+                setSliderWidth(sliderRef.current.scrollWidth - sliderRef.current.offsetWidth);
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
+    const nextProject = () => {
+        setActiveProject((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
+    };
+
+    const prevProject = () => {
+        setActiveProject((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
+    };
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -98,6 +127,13 @@ const Projects = () => {
                 duration: 0.5
             }
         }
+    };
+
+    // Arrow button animations
+    const arrowVariants = {
+        initial: { scale: 1 },
+        hover: { scale: 1.1, backgroundColor: "rgba(255, 215, 0, 0.2)" },
+        tap: { scale: 0.95 }
     };
 
     return (
@@ -169,38 +205,86 @@ const Projects = () => {
                     </motion.p>
                 </motion.div>
 
-                {/* Projects Container - Mobile-first approach */}
-                <div className="flex flex-col-reverse lg:flex-row gap-6 sm:gap-8 min-h-[450px] sm:min-h-[600px]">
-                    {/* Project Details - Optimized for mobile */}
+                {/* Custom Slider with Arrows */}
+                <div className="relative mb-12">
+                    {/* Progress Bar */}
+                    <div className="w-full h-1 bg-gray-800 rounded-full mb-8 overflow-hidden">
+                        <motion.div
+                            className="h-full bg-gradient-to-r from-[#FFD700] to-amber-400"
+                            initial={{ width: '0%' }}
+                            animate={{ width: `${(activeProject / (projects.length - 1)) * 100}%` }}
+                            transition={{ duration: 0.3 }}
+                        />
+                    </div>
+
                     <motion.div
-                        className="w-full lg:w-3/4 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8"
-                        initial={{ x: -50, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
+                        className="flex items-center mb-6 justify-between"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={activeProject}
-                                initial={{ opacity: 0, x: -50 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 50 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#FFD700] mb-3 sm:mb-4">
-                                    {projects[activeProject].title}
-                                </h3>
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#FFD700]">
+                            {projects[activeProject].title}
+                        </h3>
 
-                                <p className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6">
+                        <div className="flex space-x-3">
+                            <motion.button
+                                onClick={prevProject}
+                                className="flex items-center justify-center w-10 h-10 rounded-full bg-black/60 border border-[#FFD700]/30 text-white"
+                                variants={arrowVariants}
+                                initial="initial"
+                                whileHover="hover"
+                                whileTap="tap"
+                                aria-label="Previous project"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </motion.button>
+
+                            <motion.button
+                                onClick={nextProject}
+                                className="flex items-center justify-center w-10 h-10 rounded-full bg-black/60 border border-[#FFD700]/30 text-white"
+                                variants={arrowVariants}
+                                initial="initial"
+                                whileHover="hover"
+                                whileTap="tap"
+                                aria-label="Next project"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </motion.button>
+                        </div>
+                    </motion.div>
+
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeProject}
+                            className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.4 }}
+                        >
+                            {/* Project Details */}
+                            <motion.div
+                                className="lg:col-span-3 bg-black/40 backdrop-blur-lg border border-[#FFD700]/20 rounded-xl p-6 md:p-8"
+                                initial={{ x: -30, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                            >
+                                <p className="text-gray-300 text-sm sm:text-base mb-6">
                                     {projects[activeProject].description}
                                 </p>
 
-                                <div className="mb-4 sm:mb-6">
-                                    <h4 className="text-lg sm:text-xl font-semibold text-[#FFD700] mb-2 sm:mb-3">Technologies</h4>
+                                <div className="mb-6">
+                                    <h4 className="text-lg font-semibold text-[#FFD700] mb-3">Technologies</h4>
                                     <div className="flex flex-wrap gap-2">
                                         {projects[activeProject].technologies.map((tech) => (
                                             <span
                                                 key={tech}
-                                                className="px-2 sm:px-3 py-1 bg-[#FFD700]/10 text-[#FFD700] rounded-full text-xs sm:text-sm"
+                                                className="px-3 py-1 bg-[#FFD700]/10 text-[#FFD700] rounded-full text-xs sm:text-sm"
                                             >
                                                 {tech}
                                             </span>
@@ -208,12 +292,12 @@ const Projects = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-wrap gap-3 sm:gap-4">
+                                <div className="flex flex-wrap gap-4">
                                     <motion.a
                                         href={projects[activeProject].githubLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-black/40 border border-[#FFD700]/20 rounded-full hover:bg-[#FFD700]/10 transition-all text-sm sm:text-base"
+                                        className="flex items-center gap-2 px-4 py-2 bg-black/40 border border-[#FFD700]/20 rounded-full hover:bg-[#FFD700]/10 transition-all text-sm sm:text-base"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -230,7 +314,7 @@ const Projects = () => {
                                         href={projects[activeProject].liveLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="px-3 sm:px-4 py-1.5 sm:py-2 bg-[#FFD700] text-black rounded-full hover:bg-[#FFD700]/90 transition-all text-sm sm:text-base"
+                                        className="px-4 py-2 bg-[#FFD700] text-black rounded-full hover:bg-[#FFD700]/90 transition-all text-sm sm:text-base"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
                                     >
@@ -238,44 +322,62 @@ const Projects = () => {
                                     </motion.a>
                                 </div>
                             </motion.div>
-                        </AnimatePresence>
-                    </motion.div>
 
-                    {/* Project Image - Optimized for mobile */}
-                    <motion.div
-                        className="w-full lg:w-1/4 relative"
-                        initial={{ x: 50, opacity: 0 }}
-                        animate={{ x: 0, opacity: 1 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <div className="sticky top-20">
-                            <div className="w-full aspect-square max-w-xs mx-auto relative rounded-xl sm:rounded-2xl overflow-hidden border-2 sm:border-4 border-[#FFD700]/20">
-                                <Image
-                                    src={projects[activeProject].image}
-                                    alt={projects[activeProject].title}
-                                    fill
-                                    className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                            </div>
-
-                            {/* Project Navigation - Made more touch-friendly */}
-                            <div className="flex justify-center mt-4 sm:mt-6 space-x-2 sm:space-x-3 py-2">
-                                {projects.map((_, index) => (
-                                    <motion.button
-                                        key={index}
-                                        onClick={() => setActiveProject(index)}
-                                        className={`w-4 h-4 sm:w-6 sm:h-6 rounded-full transition-all duration-300 ${activeProject === index
-                                            ? 'bg-[#FFD700]'
-                                            : 'bg-gray-600 hover:bg-gray-400'
-                                            }`}
-                                        whileHover={{ scale: 1.2 }}
-                                        whileTap={{ scale: 0.9 }}
+                            {/* Project Image */}
+                            <motion.div
+                                className="lg:col-span-2"
+                                initial={{ scale: 0.95, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                            >
+                                <div className="group relative h-56 sm:h-64 md:h-80 lg:h-full rounded-xl overflow-hidden border-2 border-[#FFD700]/20">
+                                    <Image
+                                        src={projects[activeProject].image}
+                                        alt={projects[activeProject].title}
+                                        fill
+                                        className="object-cover transition-all duration-500 group-hover:scale-105 grayscale group-hover:grayscale-0"
                                     />
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-70 group-hover:opacity-40 transition-opacity duration-500" />
+
+                                    {/* Project number indicator */}
+                                    <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-xs border border-[#FFD700]/30">
+                                        {activeProject + 1} / {projects.length}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+
+                {/* Thumbnail Navigation */}
+                <div className="mb-16">
+                    <div
+                        ref={sliderRef}
+                        className="overflow-x-auto pb-4 hide-scrollbar"
+                    >
+                        <motion.div className="flex space-x-3 min-w-max px-1">
+                            {projects.map((project, index) => (
+                                <motion.div
+                                    key={index}
+                                    className={`relative cursor-pointer rounded-lg overflow-hidden transition-all duration-300 border-2 ${activeProject === index ? 'border-[#FFD700]' : 'border-gray-700/50'
+                                        }`}
+                                    onClick={() => setActiveProject(index)}
+                                    whileHover={{ y: -5 }}
+                                    whileTap={{ scale: 0.97 }}
+                                >
+                                    {/* <div className="w-20 h-20 sm:w-24 sm:h-24 relative">
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            fill
+                                            className={`object-cover transition-opacity ${activeProject === index ? 'grayscale-0' : 'grayscale'}`}
+                                        />
+                                        <div className={`absolute inset-0 ${activeProject === index ? 'bg-[#FFD700]/20' : 'bg-black/50'}`} />
+                                    </div> */}
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
                 </div>
 
                 {/* Additional Projects Stats - Mobile grid optimized */}
@@ -335,7 +437,7 @@ const Projects = () => {
                     ))}
                 </motion.div>
 
-                {/* Call to Action - Better spacing for mobile */}
+                {/* Call to Action */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -352,6 +454,17 @@ const Projects = () => {
                     </motion.a>
                 </motion.div>
             </motion.div>
+
+            {/* Add custom styles for hiding scrollbar */}
+            <style jsx global>{`
+                .hide-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .hide-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            `}</style>
         </div>
     );
 };
